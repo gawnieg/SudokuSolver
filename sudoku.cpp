@@ -15,7 +15,15 @@ void load_board(const char* filename, char board[9][9]) {
 
   cout << "Loading Sudoku board from file '" << filename << "'... ";
 
-  ifstream in(filename);
+ifstream in(filename);
+//shorthand way of saying
+//ifstream in;
+//in.open(filename);
+
+
+
+
+
   if (!in)
     cout << "Failed!" << endl;
   assert(in);
