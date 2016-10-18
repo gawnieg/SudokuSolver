@@ -18,6 +18,8 @@ int main() {
   display_board(board);
   cout << "Done!" << endl << endl;
 
+
+/*
   cout << "====================== Question 1 ======================" << endl << endl;
 
   load_board("easy.dat", board);
@@ -77,6 +79,10 @@ int main() {
   cout << "====================== Question 5 ======================" << endl << endl;
 
 	// write more tests
+
+*/
+
+
 
   return 0;
 }
