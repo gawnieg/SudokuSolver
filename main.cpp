@@ -19,7 +19,7 @@ int main() {
   cout << "Done!" << endl << endl;
 
 
-/*
+
   cout << "====================== Question 1 ======================" << endl << endl;
 
   load_board("easy.dat", board);
@@ -34,6 +34,16 @@ int main() {
     cout << "NOT ";
   cout << "complete." << endl << endl;
 
+
+////////////testing section//////////
+load_board("easy.dat", board);
+make_move("F8", 6 , board);
+
+
+
+
+
+/*
   cout << "====================== Question 2 ======================" << endl << endl;
 
   load_board("easy.dat", board);
