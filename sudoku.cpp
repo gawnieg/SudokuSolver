@@ -135,23 +135,16 @@ cout << "space is free" <<endl;
 }
 if(board[trans[0]][trans[1]] != '.'){
 cout << "space is taken" <<endl;
-return false;
+return false; // if the space is taken then return out of the function. Is this wanted?
 }
 
 //now check across row //////////////////////////////////////////////////////////////////////////////////// 
 bool row_match=false; //this variable is true if there is a matching
+bool col_match = false; // variable that is true if there is a match in a column
 
-cout <<endl;
-cout << endl;
-cout << "trans[0] =  " <<trans[0] <<" and " << "trans[1] =  " <<trans[1] <<endl;
-cout <<endl;
-cout << endl;
-cout <<endl;
-cout << endl;
-int num_to_right_end=0;
-num_to_right_end = (9-trans[1]); //get rid of this variable
+//could put these in functions???
 
-for(int i = 1; i < num_to_right_end; i++){
+for(int i = 1; i < (9-trans[1]); i++){
  
 	int check = ((int)board[trans[0]][(i+trans[1])]-48); 
 	cout << "checking right ... "<< i << " positions right contains  " << board[(trans[0])][(i+trans[1])]  <<" which is integer " <<check<< " to equal  " << digit <<"?"<< endl;
@@ -159,7 +152,7 @@ for(int i = 1; i < num_to_right_end; i++){
 
 	if(check == digit){
 	row_match = true;
-	cout << "There is a match accross (right)"<< endl;
+	cout << "There is a match across (right)"<< endl;
 	}
 
 
@@ -173,7 +166,7 @@ for(int i = trans[1]; i >= 1; i--){
 
 	if(check == digit){
 	row_match = true;
-	cout << "There is a match accross (left)"<< endl;
+	cout << "There is a match across (left)"<< endl;
 	}
 
 }
@@ -181,20 +174,16 @@ for(int i = trans[1]; i >= 1; i--){
 //now check down column/////////////////////////////////////////////////////////////////
 
 
-int num_to_downward_end;
-num_to_downward_end = (9-trans[0]);
-
-
-for(int i = 1; i < num_to_downward_end; i++){
+for(int i = 1; i < (9-trans[0]); i++){
  
-//	int check = ((int)board[trans[0]][(i+trans[1])]-48); 
-int check = ((int)board[(i+trans[0])][trans[1]]-48); 
+
+	int check = ((int)board[(i+trans[0])][trans[1]]-48); 
 
 	cout << "checking down ... "<< i << " positions down contains  " <<   board[(i+trans[0])][trans[1]] <<" which is integer " <<check<< " to equal  " << digit <<"?"<< endl;
 
 
 	if(check == digit){
-	row_match = true;
+	col_match = true;
 	cout << "There is a match downwards"<< endl;
 	}
 
@@ -209,82 +198,270 @@ for(int i = trans[0]; i >= 1; i--){
 
 
 	if(check == digit){
-	row_match = true;
+	col_match = true;
 	cout << "There is a match upwards"<< endl;
 	}
 
-/*
-cout << "(trans[0]-i) is " << trans[0]-i <<endl;
-cout << "trans[1] is " << trans[1] <<endl;
-cout << "i is " <<i<< endl;
+}
+
+//now checking other entries in square;
+
+//create variable to indicate what sector the position is in
+int sector_num = 0; 
+int sector_offset_hor=0;
+int sector_offset_vert=0;
+
+/*1 indicates A1 to C9
+
+-----------
+|1 | 2 | 3 |
+-----------
+|4 | 5 | 6 |
+-----------
+|7 | 8 | 9 |
+
 */
 
-
-
-}
-
-
-
-
-
-
-
-
-
-
-
-/*
-bool col_match=false; //this variable is true if there is a matching value in the corresponding column
-
-for(int i = trans[1]; i < 9; i++){
- 
-	int check = ((int)board[i][(trans[1])]-48); // casting the charcter in the board to its equivilent int,  otherwise the equality in the if statement will not be realised
-	cout << "checking up " << board[i][(trans[1])] <<"which is character " <<check<< " for " << digit<< endl;
-	
-
-	if(check == digit){
-	row_match = true;
-	cout << "There is a match up"<< endl;
-	}
-
-}
-
-for (int i = trans[1]; i >=0; i--){
-
-	int check = ((int)board[i][(trans[1])]-48); 
-	cout << "checking down " << board[i][(trans[1])] <<"which is character " <<check<< " for " << digit<< endl;
-		
-
-	if(check == digit){
-	row_match = true;
-	cout << "There is a match down"<< endl;
-	}
-
+if(trans[0] < 3 && trans[1] < 3) {
+sector_num = 1;
+sector_offset_hor=0;
+sector_offset_vert =0;
 } 
-
-*/
-
-///////////////copied function for checking horizonal 
-/*
-num_to_right_end = (9-trans[1]);
-
-for(int i = trans[1]; i < (9-trans[1]); i++){
- 
-	int check = ((int)board[trans[0]][i]-48); 
-	cout << "checking right ... "<< i << " positions right contains  " << board[(trans[0])][i]  <<" which is integer " <<check<< " to equal  " << digit <<"?"<< endl;
-
-
-	if(check == digit){
-	row_match = true;
-	cout << "There is a match accross (right)"<< endl;
-	}
-
-cout << "i is " << i <<endl;
-cout << "trans[1] is " << trans[1] <<endl;
-cout << "trans[0] is " << trans[0] <<endl;
+if(trans[0] < 3 && trans[1]>2 && trans[1] < 6 ) {
+sector_num = 2;
+sector_offset_hor = 3;
+sector_offset_vert =0;
+}
+if(trans[0] < 3 && trans[1] > 5 && trans[1] <9) {
+sector_num =3;
+sector_offset_hor = 6;
+sector_offset_vert =0;
+}
+if(trans[0] >2 && trans[0] < 6 && trans[1] < 3) {
+sector_num =4;
+sector_offset_hor=0;
+sector_offset_vert =3;
+}
+if(trans[0] >2 && trans[0] < 6 && trans[1] > 2 && trans[1] < 6) {
+sector_num =5;
+sector_offset_hor = 3;
+sector_offset_vert =3;
 
 }
-*/
+if(trans[0] >2 && trans[0] < 6 && trans[1] > 5 && trans[1] < 9) {
+sector_num =6;
+sector_offset_hor = 6;
+sector_offset_vert =3;
+
+}
+if(trans[0] >5 && trans[0] < 9 && trans[1] < 3) {
+sector_num =7;
+sector_offset_hor = 0;
+sector_offset_vert =6;
+}
+if(trans[0] >5 && trans[0] < 9 && trans[1] > 3 && trans[1] < 6){
+ sector_num =8;
+sector_offset_hor = 3;
+sector_offset_vert =6;
+
+}
+if(trans[0] >5 && trans[0] < 9 && trans[1] > 5 && trans[1] < 9) {
+sector_num =9;
+sector_offset_hor = 6;
+sector_offset_vert =6;
+
+}
+
+
+
+cout << " THE SECTOR NUMBER IS : " << sector_num << endl;
+
+
+//for G5 coordinates (6,5)trans[0]=6, trans[1] = 5
+//take modulus of trans[1] and trans[0], get values and then use case table
+int modtrans0=trans[0]%3;
+int modtrans1 = trans[1]%3;
+bool sector_match = false; //will be set to true if there is a match in the sector
+
+
+if(modtrans0==0 && modtrans1==0){
+	//case of Upper top left
+if(board[trans[0]+1][trans[1]+1]==digit)
+{sector_match == true;
+}
+if(board[trans[0]+1][trans[1]+2]==digit)
+{sector_match == true;
+}
+if(board[trans[0]+2][trans[1]+1]==digit)
+{sector_match == true;
+}
+if(board[trans[0]+2][trans[1]+2]==digit)
+{sector_match == true;
+}
+cout << "in upper left " << sector_match << endl;
+								}
+
+if(modtrans0==0 && modtrans1==1){
+	//case of Upper Middle 
+if(board[trans[0]+1][trans[1]-1]==digit)
+{sector_match == true;
+}
+if(board[trans[0]+2][trans[1]-1]==digit)
+{sector_match == true;
+}
+if(board[trans[0]+1][trans[1]+1]==digit)
+{sector_match == true;
+}
+if(board[trans[0]+2][trans[1]+1]==digit)
+{sector_match == true;
+}
+cout << "in upper middle " << sector_match << endl;
+								}
+
+if(modtrans0==0 && modtrans1==2){
+	//case of Upper Right 
+if(board[trans[0]+1][trans[1]-2]==digit)
+{sector_match == true;
+}
+if(board[trans[0]+1][trans[1]-1]==digit)
+{sector_match == true;
+}
+if(board[trans[0]+2][trans[1]-2]==digit)
+{sector_match == true;
+}
+if(board[trans[0]+2][trans[1]-1]==digit)
+{sector_match == true;
+}
+cout << "in upper right " << sector_match << endl;
+								}
+								
+								
+if(modtrans0==1 && modtrans1==0){
+	//case of Middle left 
+if(board[trans[0]-1][trans[1]+1]==digit)
+{sector_match == true;
+}
+if(board[trans[0]-1][trans[1]+2]==digit)
+{sector_match == true;
+}
+if(board[trans[0]+1][trans[1]+1]==digit)
+{sector_match == true;
+}
+if(board[trans[0]+1][trans[1]+2]==digit)
+{sector_match == true;
+}
+cout << "in middle left " << sector_match << endl;
+								}
+
+if(modtrans0==1 && modtrans1==1){
+	//case of Middle Middle 
+if(board[trans[0]-1][trans[1]-1]==digit)
+{sector_match == true;
+}
+if(board[trans[0]-1][trans[1]+1]==digit)
+{sector_match == true;
+}
+if(board[trans[0]+1][trans[1]-1]==digit)
+{sector_match == true;
+}
+if(board[trans[0]+1][trans[1]+1]==digit)
+{sector_match == true;
+}
+cout << "in middle middle " << sector_match << endl;
+								}
+								
+if(modtrans0==1 && modtrans1==2){
+	//case of Middle RIGHT 
+if(board[trans[0]-1][trans[1]-2]==digit)
+{sector_match == true;
+}
+if(board[trans[0]-1][trans[1]-1]==digit)
+{sector_match == true;
+}
+if(board[trans[0]+1][trans[1]-2]==digit)
+{sector_match == true;
+}
+if(board[trans[0]+1][trans[1]-1]==digit)
+{sector_match == true;
+}
+cout << "in middle rght " << sector_match << endl;
+								}
+								
+///////////////////////////////////////////////////////////////////////////////////////////////////								
+if(modtrans0==2 && modtrans1==0){
+	//case of Lower left 
+
+cout << "Modtrans0: " << modtrans0 << "Modtrans1: " << modtrans1 << endl;
+
+cout << "Sector offset horizontal is " << sector_offset_hor <<endl;
+cout << "Sector offset verticle is " << sector_offset_vert <<endl;
+
+cout << "searching in: board["<<  modtrans0-2 + sector_offset_vert <<"]" <<"[" << modtrans1+1 + sector_offset_hor << "]" << "which returns" << ((int)board[modtrans0-2 + sector_offset_vert][modtrans1+1 + sector_offset_hor]-48)<< endl;
+
+cout << "searching in: board["<<  modtrans0-1 + sector_offset_vert <<"]" <<"[" << modtrans1+1 + sector_offset_hor << "]" << "which returns" << ((int)board[modtrans0-1 + sector_offset_vert][modtrans1+1 + sector_offset_hor]-48)<< endl;
+
+cout << "searching in: board["<<  modtrans0-2 + sector_offset_vert <<"]" <<"[" << modtrans1+2 + sector_offset_hor << "]" << "which returns" << ((int)board[modtrans0-2 + sector_offset_vert][modtrans1+2 + sector_offset_hor]-48) << endl;
+
+cout << "searching in: board["<<  modtrans0-1 + sector_offset_vert <<"]" <<"[" << modtrans1+2 + sector_offset_hor << "]" <<  "which returns" << ((int)board[modtrans0-1 + sector_offset_vert][modtrans1+2 + sector_offset_hor] -48) << endl;
+
+
+if((int)(board[modtrans0-2 + sector_offset_vert][modtrans1+1 + sector_offset_hor]-48)==digit)
+{sector_match = true;
+cout << "sector match1" << endl;
+
+}
+
+if((int)(board[modtrans0-1 + sector_offset_vert][modtrans1+1 + sector_offset_hor]-48)==digit) // debugging this one 
+{sector_match = true;
+cout << "sector match2" << endl;
+}
+if((int)(board[modtrans0-2 + sector_offset_vert][modtrans1+2 + sector_offset_hor]-48)==digit)
+{sector_match = true;
+cout << "sector match3" << endl;
+}
+if((int)(board[modtrans0-1 + sector_offset_vert][modtrans1+2 + sector_offset_hor]-48)==digit)
+{sector_match = true;
+cout << "sector match4" << endl;
+}
+cout << "in lower left " << sector_match << endl;
+								}
+								
+if(modtrans0==2 && modtrans1==1){
+	//case of Lower MIDDLE 
+if(board[trans[0]-2][trans[1]-1]==digit)
+{sector_match == true;
+}
+if(board[trans[0]-1][trans[1]-1]==digit)
+{sector_match == true;
+}
+if(board[trans[0]-2][trans[1]+1]==digit)
+{sector_match == true;
+}
+if(board[trans[0]-1][trans[1]+1]==digit)
+{sector_match == true;
+}
+cout << "in lower middle " << sector_match << endl;
+								}
+								
+if(modtrans0==2 && modtrans1==2){
+	//case of Lower RIGHT 
+if(board[trans[0]-2][trans[1]-2]==digit)
+{sector_match == true;
+}
+if(board[trans[0]-2][trans[1]-1]==digit)
+{sector_match == true;
+}
+if(board[trans[0]-1][trans[1]-2]==digit)
+{sector_match == true;
+}
+if(board[trans[0]-1][trans[1]-1]==digit)
+{sector_match == true;
+}
+cout << "in lower right" << sector_match << endl;
+								}
+
+
+
 
 
 
