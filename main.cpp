@@ -70,10 +70,7 @@ cout << "end of program" <<endl;
   display_board(board);
 
 
-
-/*
-
-	// write more tests
+  // write more tests
 
   cout << "====================== Question 3 ======================" << endl << endl;
 
@@ -83,6 +80,10 @@ cout << "end of program" <<endl;
   else
     cout << "Save board failed." << endl;
   cout << endl;
+
+
+
+/*
 
   cout << "====================== Question 4 ======================" << endl << endl;
 
