@@ -36,24 +36,42 @@ int main() {
 
 
 ////////////testing section//////////
-load_board("easy.dat", board);
-make_move("F8", 6 , board);
+/*load_board("easy.dat", board);
+if(make_move("G3", 5 , board)==false){
+cout << "make_move is false, you cannot do this operation" << endl;	
+}
+else{
+cout << "make_move was a success" << endl;		
+}
+
+display_board(board);
+
+
+cout << "end of program" <<endl;
+
+*/
 
 
 
 
 
-/*
+
+
+
   cout << "====================== Question 2 ======================" << endl << endl;
 
   load_board("easy.dat", board);
 
   // Should be OK
   cout << "Putting '1' into I8 is ";
-  if (!make_move("I8", '1', board)) 
+  if (!make_move("I9", 6, board)) 
     cout << "NOT ";
   cout << "a valid move. The board is:" << endl;
   display_board(board);
+
+
+
+/*
 
 	// write more tests
 

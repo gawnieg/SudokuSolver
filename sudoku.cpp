@@ -100,12 +100,11 @@ return true; //otherwise return true if the execution gets to here
 
 }
 
-bool make_move(char position [2], int digit, const char board[9][9]){ // unsure about how "position is being passed here
+bool make_move(char position [2], int digit,  char board[9][9]){ // unsure about how "position is being passed here
 // first check that digit is valid
-
 	if(digit < 0 || digit > 9){
 	cout << "The digit is not valid " << endl;
-	return 0;
+	return false;
 
 			}
 // then then check if there is a number in the place where it is trying to occupy.
@@ -197,19 +196,31 @@ for(int i = trans[0]; i >= 1; i--){
 	cout << "checking up ... "<< i << " positions up contains  " << board[(trans[0]-i)][trans[1]]  <<" which is integer " <<check<< " to equal  " << digit <<"?"<< endl;
 
 
+	
 	if(check == digit){
-	col_match = true;
 	cout << "There is a match upwards"<< endl;
+	col_match = true;
 	}
 
 }
 
-//now checking other entries in square;
+//call function to check other members
+/*
+if(check_block(trans[2],board[9][9], digit)==false){
+	cout << "Check block has returned no mactch in the block"
+}
+if(check_block(trans[2],board[9][9], digit)==true){
+	cout << "Check block has returneda match in the block"
+}
 
-//create variable to indicate what sector the position is in
+*/
+	//create variable to indicate what sector the position is in
 int sector_num = 0; 
 int sector_offset_hor=0;
 int sector_offset_vert=0;
+
+
+
 
 /*1 indicates A1 to C9
 
@@ -283,11 +294,6 @@ cout << " THE SECTOR NUMBER IS : " << sector_num << endl;
 int modtrans0=trans[0]%3;
 int modtrans1 = trans[1]%3;
 bool sector_match = false; //will be set to true if there is a match in the sector
-cout << "Modtrans0: " << modtrans0 << "Modtrans1: " << modtrans1 << endl;
-
-cout << "Sector offset horizontal is " << sector_offset_hor <<endl;
-cout << "Sector offset verticle is " << sector_offset_vert <<endl;
-
 
 
 if(modtrans0==0 && modtrans1==0){
@@ -328,94 +334,54 @@ cout << "in upper middle " << sector_match << endl;
 if(modtrans0==0 && modtrans1==2){
 	//case of Upper Right 
 
-cout << "Modtrans0: " << modtrans0 << "Modtrans1: " << modtrans1 << endl;
-cout << "Searching for digit " <<digit<<endl;
-
-cout << "Sector offset horizontal is " << sector_offset_hor <<endl;
-cout << "Sector offset verticle is " << sector_offset_vert <<endl;
-
-cout << "searching in: board["<<  modtrans0+1 + sector_offset_vert <<"]" <<"[" << modtrans1-2 + sector_offset_hor << "]" << "which returns" << ((int)board[modtrans0+1 + sector_offset_vert][modtrans1-2 + sector_offset_hor]-48)<< endl;
-
-cout << "searching in: board["<<  modtrans0+1 + sector_offset_vert <<"]" <<"[" << modtrans1-1 + sector_offset_hor << "]" << "which returns" << ((int)board[modtrans0+1 + sector_offset_vert][modtrans1-1 + sector_offset_hor]-48)<< endl;
-
-cout << "searching in: board["<<  modtrans0+2 + sector_offset_vert <<"]" <<"[" << modtrans1-2 + sector_offset_hor << "]" << "which returns" << ((int)board[modtrans0+2 + sector_offset_vert][modtrans1-2 + sector_offset_hor]-48) << endl;
-
-cout << "searching in: board["<<  modtrans0+2 + sector_offset_vert <<"]" <<"[" << modtrans1-1 + sector_offset_hor << "]" <<  "which returns" << ((int)board[modtrans0+2 + sector_offset_vert][modtrans1-1 + sector_offset_hor] -48) << endl;
-
 if( ((int)board[modtrans0+1 + sector_offset_vert][modtrans1-2 + sector_offset_hor]-48)==digit)
 {sector_match = true;
-cout << "this line should execute" <<endl;
+
 }
 if( ((int)board[modtrans0+1 + sector_offset_vert][modtrans1-1 + sector_offset_hor]-48)==digit)
 {sector_match = true;
-cout << "this line should execute" <<endl;
+
 }
 if( ((int)board[modtrans0+2 + sector_offset_vert][modtrans1-2 + sector_offset_hor]-48)==digit)
 {sector_match = true;
-cout << "this line should execute" <<endl;
+
 }
 if( ((int)board[modtrans0+2 + sector_offset_vert][modtrans1-1 + sector_offset_hor] -48)==digit)
 {sector_match = true;
-cout << "this line should execute" <<endl;
+
 }
 cout << "in upper right " << sector_match << endl;
 								}
 								
 								
 if(modtrans0==1 && modtrans1==0){
-	//case of Middle left also debugged
-cout << "Modtrans0: " << modtrans0 << "Modtrans1: " << modtrans1 << endl;
-cout << "Searching for digit " <<digit<<endl;
-
-cout << "Sector offset horizontal is " << sector_offset_hor <<endl;
-cout << "Sector offset verticle is " << sector_offset_vert <<endl;
-
-cout << "searching in: board["<<  modtrans0-1 + sector_offset_vert <<"]" <<"[" << modtrans1+1 + sector_offset_hor << "]" << "which returns" << ((int)board[modtrans0-1 + sector_offset_vert][modtrans1+1 + sector_offset_hor]-48)<< endl;
-
-cout << "searching in: board["<<  modtrans0-1 + sector_offset_vert <<"]" <<"[" << modtrans1+2 + sector_offset_hor << "]" << "which returns" << ((int)board[modtrans0-1 + sector_offset_vert][modtrans1+2 + sector_offset_hor]-48)<< endl;
-
-cout << "searching in: board["<<  modtrans0+1 + sector_offset_vert <<"]" <<"[" << modtrans1+1 + sector_offset_hor << "]" << "which returns" << ((int)board[modtrans0+1 + sector_offset_vert][modtrans1+1 + sector_offset_hor]-48) << endl;
-
-cout << "searching in: board["<<  modtrans0+1 + sector_offset_vert <<"]" <<"[" << modtrans1+2 + sector_offset_hor << "]" <<  "which returns" << ((int)board[modtrans0+1 + sector_offset_vert][modtrans1+2 + sector_offset_hor] -48) << endl;
-
+	//case of Middle left 
 
 if(((int)board[modtrans0-1 + sector_offset_vert][modtrans1+1 + sector_offset_hor]-48)==digit)
 {
 sector_match = true;
-cout << "MATCHES" <<endl;
+
 }
 if(((int)board[modtrans0-1 + sector_offset_vert][modtrans1+2 + sector_offset_hor]-48)==digit)
 {
 sector_match = true;
-cout << "MATCHES" <<endl;
+
 }
 if(((int)board[modtrans0+1 + sector_offset_vert][modtrans1+1 + sector_offset_hor]-48)==digit)
 {
 sector_match = true;
-cout << "MATCHES" <<endl;
+
 }
 if(((int)board[modtrans0+1 + sector_offset_vert][modtrans1+2 + sector_offset_hor] -48)==digit)
 {
 sector_match = true;
-cout << "MATCHES" <<endl;
+
 }
 cout << "in middle left " << sector_match << endl;
 								}
 
 if(modtrans0==1 && modtrans1==1){
-	//case of Middle Middle also debugged
-cout << "Modtrans0: " << modtrans0 << "Modtrans1: " << modtrans1 << endl;
-
-cout << "Sector offset horizontal is " << sector_offset_hor <<endl;
-cout << "Sector offset verticle is " << sector_offset_vert <<endl;
-
-cout << "searching in: board["<<  modtrans0-1 + sector_offset_vert <<"]" <<"[" << modtrans1-1 + sector_offset_hor << "]" << "which returns" << ((int)board[modtrans0-1 + sector_offset_vert][modtrans1-1 + sector_offset_hor]-48)<< endl;
-
-cout << "searching in: board["<<  modtrans0-1 + sector_offset_vert <<"]" <<"[" << modtrans1+1 + sector_offset_hor << "]" << "which returns" << ((int)board[modtrans0-1 + sector_offset_vert][modtrans1+1 + sector_offset_hor]-48)<< endl;
-
-cout << "searching in: board["<<  modtrans0+1 + sector_offset_vert <<"]" <<"[" << modtrans1-1 + sector_offset_hor << "]" << "which returns" << ((int)board[modtrans0+1 + sector_offset_vert][modtrans1-1 + sector_offset_hor]-48) << endl;
-
-cout << "searching in: board["<<  modtrans0+1 + sector_offset_vert <<"]" <<"[" << modtrans1+1 + sector_offset_hor << "]" <<  "which returns" << ((int)board[modtrans0+1 + sector_offset_vert][modtrans1+1 + sector_offset_hor] -48) << endl;
+	//case of Middle Middle 
 
 
 if(((int)board[modtrans0-1+ sector_offset_vert][modtrans1-1+ sector_offset_hor]-48)==digit)
@@ -454,37 +420,21 @@ cout << "in middle rght " << sector_match << endl;
 if(modtrans0==2 && modtrans1==0){
 	//case of Lower left 
 
-cout << "Modtrans0: " << modtrans0 << "Modtrans1: " << modtrans1 << endl;
-
-cout << "Sector offset horizontal is " << sector_offset_hor <<endl;
-cout << "Sector offset verticle is " << sector_offset_vert <<endl;
-
-cout << "searching in: board["<<  modtrans0-2 + sector_offset_vert <<"]" <<"[" << modtrans1+1 + sector_offset_hor << "]" << "which returns" << ((int)board[modtrans0-2 + sector_offset_vert][modtrans1+1 + sector_offset_hor]-48)<< endl;
-
-cout << "searching in: board["<<  modtrans0-1 + sector_offset_vert <<"]" <<"[" << modtrans1+1 + sector_offset_hor << "]" << "which returns" << ((int)board[modtrans0-1 + sector_offset_vert][modtrans1+1 + sector_offset_hor]-48)<< endl;
-
-cout << "searching in: board["<<  modtrans0-2 + sector_offset_vert <<"]" <<"[" << modtrans1+2 + sector_offset_hor << "]" << "which returns" << ((int)board[modtrans0-2 + sector_offset_vert][modtrans1+2 + sector_offset_hor]-48) << endl;
-
-cout << "searching in: board["<<  modtrans0-1 + sector_offset_vert <<"]" <<"[" << modtrans1+2 + sector_offset_hor << "]" <<  "which returns" << ((int)board[modtrans0-1 + sector_offset_vert][modtrans1+2 + sector_offset_hor] -48) << endl;
 
 
 if((int)(board[modtrans0-2 + sector_offset_vert][modtrans1+1 + sector_offset_hor]-48)==digit)
 {sector_match = true;
-cout << "sector match1" << endl;
-
 }
 
-if((int)(board[modtrans0-1 + sector_offset_vert][modtrans1+1 + sector_offset_hor]-48)==digit) // debugging this one 
-{sector_match = true;
-cout << "sector match2" << endl;
+if((int)(board[modtrans0-1 + sector_offset_vert][modtrans1+1 + sector_offset_hor]-48)==digit) 
+{
+sector_match = true;
 }
 if((int)(board[modtrans0-2 + sector_offset_vert][modtrans1+2 + sector_offset_hor]-48)==digit)
 {sector_match = true;
-cout << "sector match3" << endl;
 }
 if((int)(board[modtrans0-1 + sector_offset_vert][modtrans1+2 + sector_offset_hor]-48)==digit)
 {sector_match = true;
-cout << "sector match4" << endl;
 }
 cout << "in lower left " << sector_match << endl;
 								}
@@ -509,22 +459,6 @@ cout << "in lower middle " << sector_match << endl;
 if(modtrans0==2 && modtrans1==2){
 	//case of Lower RIGHT 
 
-cout << "Modtrans0: " << modtrans0 << "Modtrans1: " << modtrans1 << endl;
-cout << "Searching for digit " <<digit<<endl;
-cout << "Sector offset horizontal is " << sector_offset_hor <<endl;
-cout << "Sector offset verticle is " << sector_offset_vert <<endl;
-
-cout << "searching in: board["<<  modtrans0-2 + sector_offset_vert <<"]" <<"[" << modtrans1-2 + sector_offset_hor << "]" << "which returns" << ((int)board[modtrans0-2 + sector_offset_vert][modtrans1-2 + sector_offset_hor]-48)<< endl;
-
-cout << "searching in: board["<<  modtrans0-2 + sector_offset_vert <<"]" <<"[" << modtrans1-1 + sector_offset_hor << "]" << "which returns" << ((int)board[modtrans0-2 + sector_offset_vert][modtrans1-1 + sector_offset_hor]-48)<< endl;
-
-cout << "searching in: board["<<  modtrans0-1 + sector_offset_vert <<"]" <<"[" << modtrans1-2 + sector_offset_hor << "]" << "which returns" << ((int)board[modtrans0-1 + sector_offset_vert][modtrans1-2 + sector_offset_hor]-48) << endl;
-
-cout << "searching in: board["<<  modtrans0-1 + sector_offset_vert <<"]" <<"[" << modtrans1-1 + sector_offset_hor << "]" <<  "which returns" << ((int)board[modtrans0-1 + sector_offset_vert][modtrans1-1 + sector_offset_hor] -48) << endl;
-
-
-//((int)board[modtrans0-1 + sector_offset_vert][modtrans1-1 + sector_offset_hor] -48)
-
 if( ((int)board[modtrans0-2+ sector_offset_vert][modtrans1-2+ sector_offset_hor]-48)==digit)
 {
 sector_match = true;
@@ -544,21 +478,32 @@ sector_match = true;
 cout << "in lower right" << sector_match << endl;
 								}
 
-
-
-
-
-
-return true; //default case i
+cout << "Sector_match" << sector_match << "col_match" << col_match << "row_match" << row_match << endl;
+								
+if(sector_match == true || col_match == true || row_match ==true){
+	cout << "THIS LINE IS EXECUTING" <<endl;
+	
+	return 0;
+}
+else{
+	cout << "filling the table with that digit" <<endl;
+	update_board(board,digit,trans );
+	cout << "Updated! " <<endl;
+	return 1; //default case i	
+}								
 
 }
 
 
 
 
+void update_board( char board[][9], int digit, int trans[2]){
 
+cout << "digit in the update function is" << digit <<endl;
 
-
+board[trans[0]][trans[1]] = (char)digit+48;
+	
+	}
 
 
 
