@@ -137,74 +137,9 @@ cout << "space is taken" <<endl;
 return false; // if the space is taken then return out of the function. Is this wanted?
 }
 
-//now check across row //////////////////////////////////////////////////////////////////////////////////// 
-bool row_match=false; //this variable is true if there is a matching
-bool col_match = false; // variable that is true if there is a match in a column
-
-//could put these in functions???
-
-for(int i = 1; i < (9-trans[1]); i++){
- 
-	int check = ((int)board[trans[0]][(i+trans[1])]-48); 
-	cout << "checking right ... "<< i << " positions right contains  " << board[(trans[0])][(i+trans[1])]  <<" which is integer " <<check<< " to equal  " << digit <<"?"<< endl;
-
-
-	if(check == digit){
-	row_match = true;
-	cout << "There is a match across (right)"<< endl;
-	}
-
-
-}
-///////////check left
-for(int i = trans[1]; i >= 1; i--){
- 
-	int check = ((int)board[trans[0]][(trans[1]-i)]-48); 
-	cout << "checking left ... "<< i << " positions left contains  " << board[(trans[0])][(trans[1]-i)]  <<" which is integer " <<check<< " to equal  " << digit <<"?"<< endl;
-
-
-	if(check == digit){
-	row_match = true;
-	cout << "There is a match across (left)"<< endl;
-	}
-
-}
-
-//now check down column/////////////////////////////////////////////////////////////////
-
-
-for(int i = 1; i < (9-trans[0]); i++){
- 
-
-	int check = ((int)board[(i+trans[0])][trans[1]]-48); 
-
-	cout << "checking down ... "<< i << " positions down contains  " <<   board[(i+trans[0])][trans[1]] <<" which is integer " <<check<< " to equal  " << digit <<"?"<< endl;
-
-
-	if(check == digit){
-	col_match = true;
-	cout << "There is a match downwards"<< endl;
-	}
-
-}
-
-//now check UP column/////////////////////////////////////////////////////////////////
-
-for(int i = trans[0]; i >= 1; i--){
- 
-	int check = ((int)board[(trans[0]-i)][trans[1]]-48); 
-	cout << "checking up ... "<< i << " positions up contains  " << board[(trans[0]-i)][trans[1]]  <<" which is integer " <<check<< " to equal  " << digit <<"?"<< endl;
-
-
-	
-	if(check == digit){
-	cout << "There is a match upwards"<< endl;
-	col_match = true;
-	}
-
-}
-
-
+//calling functions to check up and down and left and right
+bool row_match=check_left_right(trans, board, digit);
+bool col_match = check_up_down(trans, board, digit);
 bool sector_match = check_block(trans, board, digit); //using function to check if there is a match in the other memebers in the block
 
 	
@@ -506,9 +441,85 @@ cout << "in lower right" << sector_match << endl;
 return sector_match;
 
 
-}//end of function bracket
+}//end of make_move function bracket
 
 
+
+
+bool check_up_down(const int trans[2], const char board [][9], const int digit){
+bool col_match = false;
+//now check down column/
+for(int i = 1; i < (9-trans[0]); i++){
+ 
+
+	int check = ((int)board[(i+trans[0])][trans[1]]-48); 
+
+	cout << "checking down ... "<< i << " positions down contains  " <<   board[(i+trans[0])][trans[1]] <<" which is integer " <<check<< " to equal  " << digit <<"?"<< endl;
+
+
+	if(check == digit){
+	col_match = true;
+	cout << "There is a match downwards"<< endl;
+	}
+
+}
+
+//now check UP column
+for(int i = trans[0]; i >= 1; i--){
+ 
+	int check = ((int)board[(trans[0]-i)][trans[1]]-48); 
+	cout << "checking up ... "<< i << " positions up contains  " << board[(trans[0]-i)][trans[1]]  <<" which is integer " <<check<< " to equal  " << digit <<"?"<< endl;
+
+
+	
+	if(check == digit){
+	cout << "There is a match upwards"<< endl;
+	col_match = true;
+	}
+
+}
+
+return col_match;
+
+
+}
+
+
+bool check_left_right(const int trans[2], const char board [][9], const int digit){
+
+bool row_match = false;
+for(int i = 1; i < (9-trans[1]); i++){
+ 
+	int check = ((int)board[trans[0]][(i+trans[1])]-48); 
+	cout << "checking right ... "<< i << " positions right contains  " << board[(trans[0])][(i+trans[1])]  <<" which is integer " <<check<< " to equal  " << digit <<"?"<< endl;
+
+
+	if(check == digit){
+	row_match = true;
+	cout << "There is a match across (right)"<< endl;
+	}
+
+
+}
+///////////check left
+for(int i = trans[1]; i >= 1; i--){
+ 
+	int check = ((int)board[trans[0]][(trans[1]-i)]-48); 
+	cout << "checking left ... "<< i << " positions left contains  " << board[(trans[0])][(trans[1]-i)]  <<" which is integer " <<check<< " to equal  " << digit <<"?"<< endl;
+
+
+	if(check == digit){
+	row_match = true;
+	cout << "There is a match across (left)"<< endl;
+	}
+
+}
+
+
+return row_match ;
+
+
+}
 
 
 

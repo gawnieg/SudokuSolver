@@ -64,7 +64,7 @@ cout << "end of program" <<endl;
 
   // Should be OK
   cout << "Putting '1' into I8 is ";
-  if (!make_move("I9", 6, board)) 
+  if (!make_move("I9", 2, board)) 
     cout << "NOT ";
   cout << "a valid move. The board is:" << endl;
   display_board(board);
