@@ -204,16 +204,40 @@ for(int i = trans[0]; i >= 1; i--){
 
 }
 
-//call function to check other members
-/*
-if(check_block(trans[2],board[9][9], digit)==false){
-	cout << "Check block has returned no mactch in the block"
+
+bool sector_match = check_block(trans, board, digit); //using function to check if there is a match in the other memebers in the block
+
+	
+cout << "Sector_match" << sector_match << "col_match" << col_match << "row_match" << row_match << endl;
+								
+if(sector_match == true || col_match == true || row_match ==true){
+	cout << "ERROR MOVE INVALID- RETURNING ZERO" <<endl;
+	
+	return 0;
 }
-if(check_block(trans[2],board[9][9], digit)==true){
-	cout << "Check block has returneda match in the block"
+else{
+	cout << "filling the table with that digit" <<endl;
+	update_board(board,digit,trans );
+	cout << "Updated! " <<endl;
+	return 1; //default case i	
+}								
+
 }
 
-*/
+
+
+
+void update_board( char board[][9], int digit, int trans[2]){
+
+cout << "digit in the update function is" << digit <<endl;
+
+board[trans[0]][trans[1]] = (char)digit+48;
+	
+	}
+
+
+bool check_block(const int trans[2], const char board[][9], const int digit){
+
 	//create variable to indicate what sector the position is in
 int sector_num = 0; 
 int sector_offset_hor=0;
@@ -475,37 +499,14 @@ if( ((int)board[modtrans0-1+ sector_offset_vert][modtrans1-1+ sector_offset_hor]
 {
 sector_match = true;
 }
+
 cout << "in lower right" << sector_match << endl;
-								}
-
-cout << "Sector_match" << sector_match << "col_match" << col_match << "row_match" << row_match << endl;
-								
-if(sector_match == true || col_match == true || row_match ==true){
-	cout << "THIS LINE IS EXECUTING" <<endl;
-	
-	return 0;
-}
-else{
-	cout << "filling the table with that digit" <<endl;
-	update_board(board,digit,trans );
-	cout << "Updated! " <<endl;
-	return 1; //default case i	
-}								
-
 }
 
+return sector_match;
 
 
-
-void update_board( char board[][9], int digit, int trans[2]){
-
-cout << "digit in the update function is" << digit <<endl;
-
-board[trans[0]][trans[1]] = (char)digit+48;
-	
-	}
-
-
+}//end of function bracket
 
 
 
