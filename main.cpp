@@ -35,36 +35,13 @@ int main() {
   cout << "complete." << endl << endl;
 
 
-////////////testing section//////////
-/*load_board("easy.dat", board);
-if(make_move("G3", 5 , board)==false){
-cout << "make_move is false, you cannot do this operation" << endl;	
-}
-else{
-cout << "make_move was a success" << endl;		
-}
-
-display_board(board);
-
-
-cout << "end of program" <<endl;
-
-*/
-
-
-
-
-
-
-
-
   cout << "====================== Question 2 ======================" << endl << endl;
 
-  load_board("easy.dat", board);
+  load_board("easy1.dat", board);
 
   // Should be OK
   cout << "Putting '1' into I8 is ";
-  if (!make_move("I9", 2, board)) 
+  if (!make_move("C6", '7', board)) 
     cout << "NOT ";
   cout << "a valid move. The board is:" << endl;
   display_board(board);
@@ -83,10 +60,10 @@ cout << "end of program" <<endl;
 
 
 
-/*
+
+
 
   cout << "====================== Question 4 ======================" << endl << endl;
-
   load_board("easy.dat", board);
   if (solve_board(board)) {
     cout << "The 'easy' board has a solution:" << endl;
@@ -94,7 +71,12 @@ cout << "end of program" <<endl;
   } else 
     cout << "A solution cannot be found." << endl;
   cout << endl;
+  
 
+
+  
+
+  
   load_board("medium.dat", board);
   if (solve_board(board)) {
     cout << "The 'medium' board has a solution:" << endl;
@@ -109,7 +91,7 @@ cout << "end of program" <<endl;
 
 	// write more tests
 
-*/
+
 
 
 
