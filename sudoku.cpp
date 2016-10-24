@@ -81,7 +81,6 @@ while(row < 9){
 	
 	for(int index =0; index < 9 ; index++){
 		if(board[row][index] == '.'){
-		cout << "The board is not complete" << endl;
 		return false;
 						}
 
