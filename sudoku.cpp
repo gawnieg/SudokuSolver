@@ -6,8 +6,13 @@
 #include "sudoku.h"
 #include <cctype>
 
-
 using namespace std;
+
+
+int num_iterations=0;
+bool resetflagglobal = false;
+
+
 
 /* You are pre-supplied with the functions below. Add your own 
    function definitions to the end of this file. */
@@ -112,11 +117,11 @@ bool make_move(char position [2], char digit,  char board[9][9]){ // unsure abou
 
 	// check that position is inside range
 	if(trans[0] > 8 || trans[1] > 8){
-	cout << "ERROR: This position is outside range" <<endl;
+	//cout << "ERROR: This position is outside range" <<endl;
 	}
 
 	if(board[trans[0]][trans[1]] != '.'){
-	cout << "space is taken" <<endl;
+	//cout << "space is taken" <<endl;
 	return false; // if the space is taken then return out of the function. Is this wanted?
 	}
 
@@ -132,7 +137,9 @@ bool make_move(char position [2], char digit,  char board[9][9]){ // unsure abou
 	}
 	
 	update_board(board,digit,trans );
-	return 1; //default case i	
+
+	num_iterations++;
+	return 1; //default case 	
 									
 
 }//end of make_move
@@ -142,9 +149,8 @@ bool make_move(char position [2], char digit,  char board[9][9]){ // unsure abou
 
 void update_board( char board[9][9], char digit, int trans[2]){
 
-	//cout << "digit in the update function is" << digit <<endl;
+
 	board[trans[0]][trans[1]] = digit;
-	//display_board(board);
 	
 	
 	}
@@ -222,18 +228,12 @@ bool check_block(const int trans[2], const char board[9][9], const char digit){
 	}
 
 
-
-	//scout << " THE SECTOR NUMBER IS : " << sector_num << endl;
-
-
-
-	//for G5 coordinates (6,5)trans[0]=6, trans[1] = 5
+	//for example G5 coordinates (6,5)trans[0]=6, trans[1] = 5
 	//take modulus of trans[1] and trans[0], get values and then use case table
 	int modtrans0=trans[0]%3;
 	int modtrans1 = trans[1]%3;
 	bool sector_match = false; //will be set to true if there is a match in the sector
-	cout << "trans[0] is: " << trans[0] << "trans[1] is: " << trans[1] <<endl;
-	cout << "modtrans0 is: " << modtrans0 << "modtrans1 is: " << modtrans1 <<endl;
+
 
 	if(modtrans0==0 && modtrans1==0){ //
 		//case of Upper top left
@@ -250,12 +250,12 @@ bool check_block(const int trans[2], const char board[9][9], const char digit){
 	if((board[modtrans0+2+ sector_offset_vert][modtrans1+2+ sector_offset_hor])==digit)
 	{return 0;
 	}
-	cout << "in upper left " << sector_match << endl;
+	//cout << "in upper left " << sector_match << endl;
 									}
 
 	if(modtrans0==0 && modtrans1==1){
 		//case of Upper Middle 
-	cout << "in upper middle block check function " << endl;
+
 	if((board[modtrans0+1+ sector_offset_vert][modtrans1-1+ sector_offset_hor])==digit)
 	{return 0;
 	}
@@ -268,7 +268,7 @@ bool check_block(const int trans[2], const char board[9][9], const char digit){
 	if((board[modtrans0+2+ sector_offset_vert][modtrans1+1+ sector_offset_hor])==digit)
 	{return 0;
 	}
-	cout << "in upper middle " << sector_match << endl;
+	//cout << "in upper middle " << sector_match << endl;
 									}
 
 	if(modtrans0==0 && modtrans1==2){
@@ -290,7 +290,7 @@ bool check_block(const int trans[2], const char board[9][9], const char digit){
 	{return 0;
 
 	}
-	cout << "in upper right " << sector_match << endl;
+	//cout << "in upper right " << sector_match << endl;
 									}
 								
 								
@@ -317,7 +317,7 @@ bool check_block(const int trans[2], const char board[9][9], const char digit){
 	return 0;
 
 	}
-	cout << "in middle left " << sector_match << endl;
+	//cout << "in middle left " << sector_match << endl;
 									}
 
 	if(modtrans0==1 && modtrans1==1){
@@ -538,19 +538,20 @@ char position[2];
 for(position[0] ='A'; position[0] <= 'I'; position[0]++){
 	for(position[1] = '1'; position[1]  <= '9'; position[1]++){
 		if(board[(position[0]-65)][(position[1]-49)] != '.'){
-			continue;
+			continue; //skips current iteration of the for loop if is not a . aka it is a rigid number
 		}
 
 		
-		for(char solution = '1'; solution <= '9'; solution++){
+		for(char solution = '1'; solution <= '9'; solution++){ //send solution as a char
 		
 			
 				if(make_move(position, solution, board )){
 					if(solve_board(board)){
-						return 1;
+						performance();
+						return 1; //executed when the board has been solved, this is going back up!
 					}
 				}
-			board[(position[0]-65)][(position[1]-49)] = '.'; //why???
+			board[(position[0]-65)][(position[1]-49)] = '.'; 
 			}
 				return 0;
 		}
@@ -561,6 +562,23 @@ for(position[0] ='A'; position[0] <= 'I'; position[0]++){
 	
 	
 }
+
+
+int performance(){
+	
+	int temp = num_iterations;
+	return temp;// returns the number of iterations (global variable) to the main
+}
+
+void reset_performance(){ 
+
+	//function to reset the number of iterations to 0. 
+	num_iterations=0;
+}
+
+
+
+
 
 
 	

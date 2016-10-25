@@ -1,1 +1,11 @@
 Summarise your findings here (see specification).
+
+From my program I have deduced that "mystery1.dat" is the Sudoku file of "exteremly hard" difficulty. This was deduced from:
+
+1. The time taken to compile, which is significantly longer than the time for the other sudoku files. The time talem was of the order of ~180,000 clock ticks, which is a system dependant variable. This is in comparison to 1063 clock ticks as the time taken to solve the "easy" board. The "mystery1" board took nearly 170 times longer to solve.
+2. The number of calls to "make_move" required before completion is a huge 421,546 times! This is also in comparison to the 2172 times to solve "easy" (194 times more make_move calls). 
+
+I have also deduced that "mystery2" is impossible to solve using the recursive method I have programmed. The solver function returns a false value every time it has been called for it. I independantly verified this on http://www.sudoku-solutions.com/ where it deemed the input unsolvable.
+
+
+I have determined the "mystery3" board to be of hard difficulty. The board took ~6900 clock ticks to solve in comparison to 1063 clock ticks (or 6.5 times longer) for the board of "easy" difficulty. The board took 14,133 calls to make_move to solve (6.5 times more). 

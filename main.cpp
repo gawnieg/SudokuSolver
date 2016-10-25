@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cstdio>
+#include <time.h>
 #include "sudoku.h"
 
 using namespace std;
@@ -37,7 +38,7 @@ int main() {
 
   cout << "====================== Question 2 ======================" << endl << endl;
 
-  load_board("easy1.dat", board);
+  load_board("easy.dat", board);
 
   // Should be OK
   cout << "Putting '1' into I8 is ";
@@ -64,32 +65,108 @@ int main() {
 
 
   cout << "====================== Question 4 ======================" << endl << endl;
-  load_board("easy.dat", board);
+  	//testing easy board//
+
+	clock_t time1, time2;
+	time1 = clock(); // sets time1 to the current time
+	cout << "Printing time1 "<< time1 <<endl;
+
+	load_board("easy.dat", board);
+	  if (solve_board(board)) {
+	    cout << "The 'easy' board has a solution:" << endl;
+	    display_board(board);
+	  } else 
+	    cout << "A solution cannot be found." << endl;
+	  cout << endl;
+	  time2= clock();
+	cout << "Printing time2 "<< time2 <<endl;
+
+	float time_taken = (float)time2-(float)time1;
+	cout << "The solving took " << time_taken << "clock ticks "<< endl;
+	cout << "the number of iterations (performace function) is : " << performance() << endl;
+	reset_performance();
+
+
+
+
+	//Testing Medium Board//
+	  load_board("medium.dat", board);
+	  if (solve_board(board)) {
+	    cout << "The 'medium' board has a solution:" << endl;
+	    display_board(board);
+	  } else 
+	    cout << "A solution cannot be found." << endl;
+	  cout << endl;
+	cout << "the number of iterations (performace function) is : " << performance() << endl;
+	reset_performance();
+
+
+
+ cout << "====================== Question 5 ======================" << endl << endl;
+
+//define clocks to time how long each solution is taking
+
+
+
+
+
+  load_board("mystery1.dat", board);
+  time1 = clock(); // sets time1 to the current time
   if (solve_board(board)) {
-    cout << "The 'easy' board has a solution:" << endl;
+    cout << "The 'mystery1' board has a solution:" << endl;
     display_board(board);
   } else 
     cout << "A solution cannot be found." << endl;
   cout << endl;
-  
+  cout << "the number of iterations (performace function) is : " << performance() << endl;
+  time2 = clock(); //time after the function is finished
+
+time_taken = (float)time2-(float)time1;
+cout << "The solving took " << time_taken << "clock ticks "<< endl;
+cout << "clock ticks " << CLOCKS_PER_SEC << "per second "<<endl;
+reset_performance();
+cout << endl;
 
 
-  
 
-  
-  load_board("medium.dat", board);
+
+  load_board("mystery3.dat", board);
+  time1 = clock(); // sets time1 to the current time
   if (solve_board(board)) {
-    cout << "The 'medium' board has a solution:" << endl;
+    cout << "The 'mystery3' board has a solution:" << endl;
     display_board(board);
   } else 
     cout << "A solution cannot be found." << endl;
   cout << endl;
+  time2 = clock(); //time after the function is finished
 
-	// write more tests
+time_taken = (float)time2-(float)time1;
+cout << "The solving took " << time_taken << "clock ticks "<< endl;
+cout << "the number of iterations (performace function) is : " << performance() << endl;
+reset_performance();
+cout << endl;
 
-  cout << "====================== Question 5 ======================" << endl << endl;
 
-	// write more tests
+
+
+
+  load_board("mystery2.dat", board);
+  time1 = clock(); // sets time1 to the current time
+  if (solve_board(board)) {
+    cout << "The 'mystery2' board has a solution:" << endl;
+    display_board(board);
+  } else 
+    cout << "A solution cannot be found." << endl;
+  cout << endl;
+  time2 = clock(); //time after the function is finished
+  
+
+time_taken = (float)time2-(float)time1;
+cout << "The solving took " << time_taken << "clock ticks "<< endl;
+cout << "the number of iterations (performace function) is : " << performance() << endl;
+reset_performance();
+cout <<endl;
+
 
 
 
